@@ -173,7 +173,7 @@
   .visible .event-card:nth-child(2) { transition-delay: 0.2s; }
   .visible .event-card:nth-child(3) { transition-delay: 0.3s; }
   .visible .event-card:nth-child(4) { transition-delay: 0.4s; }
-  .event-photos { display: grid; gap: 4px; }
+  .event-photos { display: grid; gap: 4px; overflow: hidden; }
   .event-photos.two { grid-template-columns: 1fr 1fr; }
   .event-photos img { width: 100%; height: 160px; object-fit: contain; background: #f8f9ff; display: block; }
   .event-photos.one img { height: 200px; }
@@ -251,7 +251,7 @@
   .visible .collab-card { opacity: 1; transform: translateY(0); }
   .visible .collab-card:nth-child(1) { transition-delay: 0.1s; }
   .visible .collab-card:nth-child(2) { transition-delay: 0.25s; }
-  .collab-gallery { display: grid; gap: 6px; background: #f8f9ff; }
+  .collab-gallery { display: grid; gap: 6px; background: #f8f9ff; overflow: hidden; }
   .collab-gallery.blue-bg { background: #eef9ff; }
   .collab-gallery.g4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
   .collab-gallery.g2 { grid-template-columns: repeat(2, 1fr); }
@@ -301,7 +301,7 @@
 
   /* 마무리 */
   #closing { background: linear-gradient(180deg, rgba(18,12,32,0.72), rgba(18,12,32,0.82)), url('imgs/closing_bg.jpg') center/cover no-repeat; text-align: center; min-height: 100vh; flex-direction: column; }
-  .closing-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px auto; max-width: 700px; }
+  .closing-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px auto; max-width: 700px; overflow: hidden; border-radius: 12px; }
   .closing-gallery img { width: 100%; height: 120px; object-fit: contain; background: #f8f9ff; border-radius: 12px; }
   .closing-ring { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--cyanGlow); display: flex; align-items: center; justify-content: center; margin: 0 auto 40px; position: relative; opacity: 0; transition: all 0.8s ease; }
   .visible .closing-ring { opacity: 1; }
@@ -320,6 +320,26 @@
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
   ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+  /* 이미지 호버 확대 효과 */
+  .event-photos img,
+  .collab-gallery img,
+  .collab-photo-item img,
+  .devotion-card img,
+  .closing-gallery img,
+  .intro-photo-card img {
+    transition: transform 0.45s ease;
+    position: relative;
+  }
+  .event-photos img:hover,
+  .collab-gallery img:hover,
+  .collab-photo-item img:hover,
+  .devotion-card img:hover,
+  .closing-gallery img:hover,
+  .intro-photo-card img:hover {
+    transform: scale(1.08);
+    z-index: 2;
+  }
 
   @media (max-width: 768px) {
     section { padding: 100px 24px 60px; }
