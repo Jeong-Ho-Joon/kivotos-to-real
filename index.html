@@ -230,19 +230,23 @@
 
   /* 콜라보 제안 */
   #collab { background: var(--dark2); }
-  .collab-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 48px; }
+  .collab-cards { display: grid; grid-template-columns: 1fr; gap: 48px; margin-top: 48px; }
   .collab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
   .collab-card:hover { border-color: var(--cyan); transform: translateY(-6px); }
   .visible .collab-card { opacity: 1; transform: translateY(0); }
   .visible .collab-card:nth-child(1) { transition-delay: 0.1s; }
   .visible .collab-card:nth-child(2) { transition-delay: 0.25s; }
-  .collab-card-img { width: 100%; height: 260px; object-fit: contain; background: #f8f9ff; padding: 16px; display: block; }
-  .collab-card-img.blue-bg { background: #eef9ff; }
+  .collab-gallery { display: grid; gap: 6px; background: #f8f9ff; }
+  .collab-gallery.blue-bg { background: #eef9ff; }
+  .collab-gallery.g4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
+  .collab-gallery.g2 { grid-template-columns: repeat(2, 1fr); }
+  .collab-gallery img { width: 100%; height: 320px; object-fit: contain; display: block; padding: 10px; }
+  .collab-gallery.g2 img { height: 380px; }
   .collab-header { padding: 20px 28px 16px; border-bottom: 1px solid var(--border); }
   .collab-num { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 8px; }
   .collab-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
   .collab-char { font-size: 13px; color: var(--blue); font-weight: 600; }
-  .collab-body { padding: 20px 28px; }
+  .collab-body { padding: 24px 32px 28px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: start; }
   .collab-section { margin-bottom: 16px; }
   .collab-section-title { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
   .collab-section p { font-size: 13px; color: var(--gray); line-height: 1.8; }
@@ -307,6 +311,9 @@
     nav { padding: 14px 24px; }
     .nav-links { display: none; }
     .intro-grid, .events-grid, .collab-cards, .role-tasks, .devotion-grid, .devotion-pillars, .events-insight-grid { grid-template-columns: 1fr; }
+    .collab-gallery.g4, .collab-gallery.g2 { grid-template-columns: 1fr; }
+    .collab-gallery img, .collab-gallery.g2 img { height: 260px; }
+    .collab-body { grid-template-columns: 1fr; }
     .intro-layout { grid-template-columns: 1fr; }
     .intro-photo-card { order: -1; height: 320px; }
     .intro-row-thumb { display: none; }
@@ -596,7 +603,12 @@
     <div class="section-body">
       <div class="collab-cards">
         <div class="collab-card">
-          <img src="imgs/sumire_shoes.png" alt="스미레 러닝화" class="collab-card-img" />
+          <div class="collab-gallery g4">
+            <img src="imgs/sumire_side.png" alt="스미레 러닝화 측면" />
+            <img src="imgs/sumire_pair_side.png" alt="스미레 러닝화 페어 측면" />
+            <img src="imgs/sumire_pair_top.png" alt="스미레 러닝화 탑뷰" />
+            <img src="imgs/sumire_detail.png" alt="스미레 러닝화 디테일" />
+          </div>
           <div class="collab-header">
             <div class="collab-num">CONCEPT 01</div>
             <div class="collab-name">스미레의 퍼포먼스 러닝화</div>
@@ -604,12 +616,17 @@
           </div>
           <div class="collab-body">
             <div class="collab-section"><div class="collab-section-title">Lore Match</div><p>"건강한 신체에 건전한 정신"을 모토로 하는 밀레니엄의 운동 아이콘 스미레. <strong>캐릭터 서사가 제품의 기능적 본질과 완벽하게 일치</strong>합니다.</p></div>
-            <div class="collab-section"><div class="collab-section-title">Color Palette</div><div class="color-dots"><div class="color-dot" style="background:#E8E0F5;"></div><div class="color-dot" style="background:#C9A8E0;"></div></div></div>
-            <div class="price-tag"><span class="price-label">SUGGESTED PRICE</span><span class="price-value">119,000 ~ 149,000원</span></div>
+            <div>
+              <div class="collab-section"><div class="collab-section-title">Color Palette</div><div class="color-dots"><div class="color-dot" style="background:#E8E0F5;"></div><div class="color-dot" style="background:#C9A8E0;"></div></div></div>
+              <div class="price-tag"><span class="price-label">SUGGESTED PRICE</span><span class="price-value">119,000 ~ 149,000원</span></div>
+            </div>
           </div>
         </div>
         <div class="collab-card">
-          <img src="imgs/shiroko_bottle.png" alt="시로코 물병" class="collab-card-img blue-bg" />
+          <div class="collab-gallery g2 blue-bg">
+            <img src="imgs/shiroko_river.png" alt="시로코 물병 야외 컷" />
+            <img src="imgs/shiroko_gym.png" alt="시로코 물병 짐 컷" />
+          </div>
           <div class="collab-header">
             <div class="collab-num">CONCEPT 02</div>
             <div class="collab-name">시로코의 사이클링 물병</div>
@@ -617,8 +634,10 @@
           </div>
           <div class="collab-body">
             <div class="collab-section"><div class="collab-section-title">Lore Match</div><p>자전거 라이딩을 즐기는 액티브파 시로코. 팬덤 유행어 <strong>'후토스토(フトスト)'</strong> 밈을 제품 스토리텔링에 녹여 심리적 만족감을 극대화합니다.</p></div>
-            <div class="collab-section"><div class="collab-section-title">Color Palette</div><div class="color-dots"><div class="color-dot" style="background:#C8EEFF;"></div><div class="color-dot" style="background:#00D6FA;"></div><div class="color-dot" style="background:#1288F8;"></div></div></div>
-            <div class="price-tag"><span class="price-label">SUGGESTED PRICE</span><span class="price-value">18,000 ~ 25,000원</span></div>
+            <div>
+              <div class="collab-section"><div class="collab-section-title">Color Palette</div><div class="color-dots"><div class="color-dot" style="background:#C8EEFF;"></div><div class="color-dot" style="background:#00D6FA;"></div><div class="color-dot" style="background:#1288F8;"></div></div></div>
+              <div class="price-tag"><span class="price-label">SUGGESTED PRICE</span><span class="price-value">18,000 ~ 25,000원</span></div>
+            </div>
           </div>
         </div>
       </div>
