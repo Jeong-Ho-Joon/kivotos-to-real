@@ -173,9 +173,9 @@
   .visible .event-card:nth-child(2) { transition-delay: 0.2s; }
   .visible .event-card:nth-child(3) { transition-delay: 0.3s; }
   .visible .event-card:nth-child(4) { transition-delay: 0.4s; }
-  .event-photos { display: grid; gap: 4px; overflow: hidden; }
+  .event-photos { display: grid; gap: 4px; overflow: hidden; padding: 14px 14px 0; box-sizing: border-box; }
   .event-photos.two { grid-template-columns: 1fr 1fr; }
-  .event-photos img { width: 100%; height: 160px; object-fit: contain; background: transparent; display: block; }
+  .event-photos img { width: 100%; height: 160px; object-fit: contain; background: transparent; display: block; border-radius: 10px; }
   .event-photos.one img { height: 200px; }
   .event-content { padding: 24px; }
   .event-num { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 8px; }
@@ -217,8 +217,8 @@
   /* Lore vs Logo */
   #lore { }
   .collab-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
-  .collab-photo-item { position: relative; border-radius: 12px; overflow: hidden; height: 140px; background: transparent; }
-  .collab-photo-item img { width: 100%; height: 100%; object-fit: contain; }
+  .collab-photo-item { position: relative; border-radius: 12px; overflow: hidden; height: 140px; background: transparent; box-sizing: border-box; padding: 10px 10px 0; }
+  .collab-photo-item img { width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
   .collab-photo-item .caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 8px 10px; font-size: 10px; color: white; font-weight: 600; }
   .lore-table { border-radius: 20px; overflow: hidden; border: 1px solid var(--border); opacity: 0; transform: translateY(30px); transition: all 0.7s ease 0.1s; }
   .visible .lore-table { opacity: 1; transform: translateY(0); }
@@ -282,7 +282,7 @@
   .visible .devotion-card:nth-child(2) { transition-delay: 0.2s; }
   .visible .devotion-card:nth-child(3) { transition-delay: 0.3s; }
   .visible .devotion-card:nth-child(4) { transition-delay: 0.4s; }
-  .devotion-card img { width: 100%; height: 220px; object-fit: contain; display: block; background: #10131c; }
+  .devotion-card img { width: calc(100% - 28px); height: 210px; object-fit: contain; display: block; background: #10131c; margin: 14px 14px 0; border-radius: 12px; }
   .devotion-content { padding: 24px; }
   .devotion-num { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 8px; }
   .devotion-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
@@ -301,8 +301,8 @@
 
   /* 마무리 */
   #closing { background: linear-gradient(180deg, rgba(18,12,32,0.72), rgba(18,12,32,0.82)), url('imgs/closing_bg.jpg') center/cover no-repeat; text-align: center; min-height: 100vh; flex-direction: column; }
-  .closing-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px auto; max-width: 700px; overflow: hidden; border-radius: 12px; }
-  .closing-gallery img { width: 100%; height: 120px; object-fit: contain; background: transparent; border-radius: 12px; }
+  .closing-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px auto; max-width: 920px; overflow: hidden; border-radius: 12px; }
+  .closing-gallery img { width: 100%; height: 240px; object-fit: contain; background: transparent; border-radius: 12px; }
   .closing-ring { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--cyanGlow); display: flex; align-items: center; justify-content: center; margin: 0 auto 40px; position: relative; opacity: 0; transition: all 0.8s ease; }
   .visible .closing-ring { opacity: 1; }
   .closing-ring::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.5); }
@@ -360,6 +360,7 @@
     .lore-thead span:nth-child(3), .lore-thead span:nth-child(4), .lore-body, .lore-insight { display: none; }
     .lore-body { display: block; }
     .closing-gallery { grid-template-columns: 1fr 1fr; }
+    .closing-gallery img { height: 160px; }
     .collab-photos { grid-template-columns: 1fr; }
   }
 </style>
