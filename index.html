@@ -262,16 +262,16 @@
   .devotion-note { margin-top: 32px; text-align: center; font-size: 14px; color: var(--gray); }
 
   /* 마무리 */
-  #closing { background: var(--dark); text-align: center; min-height: 100vh; flex-direction: column; }
+  #closing { background: linear-gradient(180deg, rgba(18,12,32,0.72), rgba(18,12,32,0.82)), url('imgs/closing_bg.jpg') center/cover no-repeat; text-align: center; min-height: 100vh; flex-direction: column; }
   .closing-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px auto; max-width: 700px; }
   .closing-gallery img { width: 100%; height: 120px; object-fit: contain; background: #f8f9ff; border-radius: 12px; }
-  .closing-ring { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 40px; position: relative; opacity: 0; transition: all 0.8s ease; }
+  .closing-ring { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--cyanGlow); display: flex; align-items: center; justify-content: center; margin: 0 auto 40px; position: relative; opacity: 0; transition: all 0.8s ease; }
   .visible .closing-ring { opacity: 1; }
-  .closing-ring::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid var(--cyan); }
-  .closing-name-big { font-size: 44px; font-weight: 900; color: var(--blue); }
-  .closing-main { font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.3; margin-bottom: 24px; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
+  .closing-ring::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.5); }
+  .closing-name-big { font-size: 44px; font-weight: 900; color: #FFFFFF; }
+  .closing-main { font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.3; margin-bottom: 24px; color: #F7F3FF; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
   .visible .closing-main { opacity: 1; transform: translateY(0); }
-  .closing-sub { font-size: 15px; color: var(--gray); line-height: 1.9; max-width: 560px; margin: 0 auto 48px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.3s; }
+  .closing-sub { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.9; max-width: 560px; margin: 0 auto 48px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.3s; }
   .visible .closing-sub { opacity: 1; transform: translateY(0); }
   .closing-badge { display: inline-block; background: var(--blue); color: #FFFFFF; font-size: 15px; font-weight: 700; padding: 16px 40px; border-radius: 100px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.4s; }
   .visible .closing-badge { opacity: 1; transform: translateY(0); }
@@ -641,7 +641,7 @@
       <img src="imgs/festival1.jpg" alt="블루아카이브 페스티벌" />
       <img src="imgs/run_cert.jpg" alt="키보토스 런 완주 사진" />
     </div>
-    <h2 class="closing-main">플레이어의 감동을<br><span style="color:var(--cyan)">비즈니스의 확신으로.</span></h2>
+    <h2 class="closing-main">플레이어의 감동을<br><span style="color:var(--cyanGlow)">비즈니스의 확신으로.</span></h2>
     <p class="closing-sub">블루 아카이브는 저에게 단순한 게임이 아닙니다.<br>IP가 현실의 경험으로 확장될 수 있다는 가능성을 보여준 콘텐츠였습니다.<br><br>오프라인 행사와 다양한 콜라보를 직접 경험하며,<br>유저가 어떤 순간에 즐거움을 느끼고 소비로 이어지는지 고민하게 되었습니다.<br><br>이 경험을 바탕으로, 유저와 브랜드 모두가 만족할 수 있는 IP 경험을 함께 만들고 싶습니다.</p>
     <div class="closing-badge">준비된 IP 라이선스 담당자, 정호준입니다.</div>
   </div>
