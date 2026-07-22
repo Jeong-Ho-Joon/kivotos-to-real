@@ -7,6 +7,44 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700;900&display=swap');
 
+  /* 메인폰트: 한글은 경기천년제목, 영문·숫자는 RSU — 같은 font-family 안에서 유니코드 범위로 자동 분리 */
+  @font-face {
+    font-family: 'MainDisplay';
+    src: url('fonts/MainFont.ttf') format('truetype');
+    font-weight: 500;
+    unicode-range: U+AC00-D7A3, U+1100-11FF, U+3130-318F, U+A960-A97F, U+D7B0-D7FF;
+  }
+  @font-face {
+    font-family: 'MainDisplay';
+    src: url('fonts/MainFont_Bold.ttf') format('truetype');
+    font-weight: 700;
+    unicode-range: U+AC00-D7A3, U+1100-11FF, U+3130-318F, U+A960-A97F, U+D7B0-D7FF;
+  }
+  @font-face {
+    font-family: 'MainDisplay';
+    src: url('fonts/RSU_Regular.ttf') format('truetype');
+    font-weight: 400 600;
+    unicode-range: U+0000-024F;
+  }
+  @font-face {
+    font-family: 'MainDisplay';
+    src: url('fonts/RSU_BOLD.ttf') format('truetype');
+    font-weight: 700 900;
+    unicode-range: U+0000-024F;
+  }
+
+  /* 서브폰트: 노토산스 (영문/숫자는 자체 글리프, 한글은 Noto Sans KR로 자동 폴백) */
+  @font-face {
+    font-family: 'Noto Sans Local';
+    src: url('fonts/NotoSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: 'Noto Sans Local';
+    src: url('fonts/NotoSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+  }
+
   :root {
     --blue: #1288F8;
     --cyan: #0098BF;          /* 원본 #00D6FA를 밝은 배경 위 가독성을 위해 살짝 짙게 조정 */
@@ -43,7 +81,7 @@
       var(--dark2) 87.5%,
       var(--dark) 100%);
     color: var(--white);
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'Noto Sans Local', 'Noto Sans KR', sans-serif;
     overflow-x: hidden;
   }
 
@@ -69,7 +107,7 @@
   section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 80px 80px; position: relative; overflow: hidden; }
   .section-inner { max-width: 1100px; width: 100%; }
   .eyebrow { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; color: var(--cyan); text-transform: uppercase; margin-bottom: 16px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-  .section-title { font-size: clamp(32px, 5vw, 56px); font-weight: 900; line-height: 1.1; margin-bottom: 24px; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.1s; }
+  .section-title { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: clamp(32px, 5vw, 56px); font-weight: 900; line-height: 1.1; margin-bottom: 24px; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.1s; }
   .section-title .accent { color: var(--cyan); }
   .section-body { opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
   .visible .eyebrow, .visible .section-title, .visible .section-body { opacity: 1; transform: translateY(0); }
@@ -83,11 +121,11 @@
   .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 214, 250, 0.1); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; font-size: 12px; color: var(--cyan); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 32px; animation: fadeUp 0.8s ease forwards; }
   .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--cyanGlow); border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
-  .hero-main { font-size: clamp(42px, 7vw, 88px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; animation: fadeUp 0.8s ease 0.1s both; }
+  .hero-main { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: clamp(42px, 7vw, 88px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; animation: fadeUp 0.8s ease 0.1s both; }
   .hero-main .line2 { color: var(--cyan); }
   .hero-sub { margin: 28px auto 0; font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 480px; animation: fadeUp 0.8s ease 0.2s both; }
   .hero-name { margin-top: 48px; display: flex; align-items: center; justify-content: center; gap: 20px; animation: fadeUp 0.8s ease 0.3s both; }
-  .hero-name-text { font-size: 20px; font-weight: 700; }
+  .hero-name-text { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 700; }
   .hero-name-role { font-size: 13px; color: var(--cyan); font-weight: 500; background: rgba(18, 136, 248, 0.12); border: 1px solid rgba(18, 136, 248, 0.3); border-radius: 6px; padding: 4px 12px; }
   .hero-tags { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.8s ease 0.4s both; }
   .hero-chip { background: rgba(43,43,43,0.04); border: 1px solid rgba(43,43,43,0.14); border-radius: 100px; padding: 8px 18px; font-size: 13px; color: var(--gray); }
@@ -119,7 +157,7 @@
   #subculture { }
   .def-box { margin-top: 48px; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; }
   .def-box::before { content: '"'; position: absolute; top: -20px; left: 32px; font-size: 160px; color: rgba(18,136,248,0.08); font-family: 'Inter', sans-serif; font-weight: 900; line-height: 1; }
-  .def-quote { font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; line-height: 1.6; position: relative; z-index: 1; }
+  .def-quote { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; line-height: 1.6; position: relative; z-index: 1; }
   .def-quote .hl { color: var(--cyan); }
   .def-source { margin-top: 24px; font-size: 13px; color: var(--gray); position: relative; z-index: 1; }
   .timeline { margin-top: 48px; display: flex; gap: 0; position: relative; }
@@ -241,7 +279,7 @@
   /* 콜라보 제안 */
   #collab { }
   .collab-rationale { margin-top: 40px; }
-  .collab-rationale-quote { font-size: clamp(17px, 2vw, 22px); font-weight: 700; line-height: 1.6; padding: 28px 32px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 18px; }
+  .collab-rationale-quote { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: clamp(17px, 2vw, 22px); font-weight: 700; line-height: 1.6; padding: 28px 32px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 18px; }
   .collab-rationale-quote .hl { color: var(--cyan); }
   .collab-reason-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 32px; margin-top: 28px; }
   .collab-reason-num { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.12em; margin-bottom: 8px; }
@@ -309,8 +347,8 @@
   .closing-ring { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--cyanGlow); display: flex; align-items: center; justify-content: center; margin: 0 auto 40px; position: relative; opacity: 0; transition: all 0.8s ease; }
   .visible .closing-ring { opacity: 1; }
   .closing-ring::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.5); }
-  .closing-name-big { font-size: 44px; font-weight: 900; color: #FFFFFF; }
-  .closing-main { font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.3; margin-bottom: 24px; color: #F7F3FF; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
+  .closing-name-big { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: 44px; font-weight: 900; color: #FFFFFF; }
+  .closing-main { font-family: 'MainDisplay', 'Noto Sans KR', sans-serif; font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.3; margin-bottom: 24px; color: #F7F3FF; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
   .visible .closing-main { opacity: 1; transform: translateY(0); }
   .closing-sub { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.9; max-width: 560px; margin: 0 auto 48px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.3s; }
   .visible .closing-sub { opacity: 1; transform: translateY(0); }
