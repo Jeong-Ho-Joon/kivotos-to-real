@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정호준 | 블루아카이브 IP 라이선스</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@300;400;600;700;900&display=swap');
+
+  :root {
+    --blue: #1288F8;
+    --cyan: #00D6FA;
+    --dark: #0A0A14;
+    --dark2: #0F0F1E;
+    --dark3: #141428;
+    --white: #FFFFFF;
+    --gray: #8899AA;
+    --light: #E8F4FF;
+    --card: rgba(18, 136, 248, 0.08);
+    --border: rgba(0, 214, 250, 0.2);
+    --softBlue: #D6EAFF;
+    --lightBg: #F0F7FF;
+    --lightCyan: #E8FCFF;
+    --midGray: #DDDDDD;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* 네비게이션 */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 48px;
+    background: rgba(10, 10, 20, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; color: var(--cyan); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--gray); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* 섹션 공통 */
+  section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 80px 80px; position: relative; overflow: hidden; }
+  .section-inner { max-width: 1100px; width: 100%; }
+  .eyebrow { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; color: var(--cyan); text-transform: uppercase; margin-bottom: 16px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+  .section-title { font-size: clamp(32px, 5vw, 56px); font-weight: 900; line-height: 1.1; margin-bottom: 24px; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.1s; }
+  .section-title .accent { color: var(--cyan); }
+  .section-body { opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
+  .visible .eyebrow, .visible .section-title, .visible .section-body { opacity: 1; transform: translateY(0); }
+
+  /* 히어로 */
+  #hero { min-height: 100vh; background: var(--dark); flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10vw; }
+  #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 214, 250, 0.1); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; font-size: 12px; color: var(--cyan); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 32px; animation: fadeUp 0.8s ease forwards; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
+  .hero-main { font-size: clamp(42px, 7vw, 88px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; animation: fadeUp 0.8s ease 0.1s both; }
+  .hero-main .line2 { color: var(--cyan); }
+  .hero-sub { margin-top: 28px; font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 480px; animation: fadeUp 0.8s ease 0.2s both; }
+  .hero-name { margin-top: 48px; display: flex; align-items: center; gap: 20px; animation: fadeUp 0.8s ease 0.3s both; }
+  .hero-name-text { font-size: 20px; font-weight: 700; }
+  .hero-name-role { font-size: 13px; color: var(--cyan); font-weight: 500; background: rgba(18, 136, 248, 0.12); border: 1px solid rgba(18, 136, 248, 0.3); border-radius: 6px; padding: 4px 12px; }
+  .hero-tags { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.4s both; }
+  .hero-chip { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 100px; padding: 8px 18px; font-size: 13px; color: var(--gray); }
+  .hero-chip.active { background: rgba(18, 136, 248, 0.15); border-color: rgba(18, 136, 248, 0.4); color: var(--cyan); }
+  .hero-photo { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); z-index: 2; }
+  .hero-photo-wrap { width: 300px; height: 400px; border-radius: 20px; overflow: hidden; border: 2px solid rgba(0,214,250,0.4); box-shadow: 0 0 40px rgba(18,136,248,0.3); }
+  .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .hero-photo-caption { background: rgba(10,10,20,0.9); padding: 12px 16px; }
+  .hero-photo-caption .sub { font-size: 11px; color: var(--cyan); font-weight: 700; letter-spacing: 0.15em; margin-bottom: 2px; }
+  .hero-photo-caption .main { font-size: 13px; color: white; font-weight: 600; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* 자기소개 */
+  #intro { background: var(--dark2); }
+  .profile-card { display: flex; align-items: center; gap: 28px; margin-bottom: 36px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 20px; padding: 24px 32px; }
+  .profile-card img { width: 100px; height: 130px; object-fit: cover; object-position: center top; border-radius: 12px; border: 2px solid rgba(0,214,250,0.4); flex-shrink: 0; }
+  .profile-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+  .profile-sub { font-size: 13px; color: var(--cyan); margin-bottom: 12px; }
+  .profile-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .profile-tag { background: rgba(18,136,248,0.15); border: 1px solid rgba(18,136,248,0.4); border-radius: 100px; padding: 4px 12px; font-size: 11px; color: var(--cyan); font-weight: 700; }
+  .intro-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .intro-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; transition: all 0.3s; opacity: 0; transform: translateY(30px); }
+  .intro-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+  .visible .intro-card { opacity: 1; transform: translateY(0); }
+  .visible .intro-card:nth-child(1) { transition: all 0.6s ease 0.1s; }
+  .visible .intro-card:nth-child(2) { transition: all 0.6s ease 0.2s; }
+  .visible .intro-card:nth-child(3) { transition: all 0.6s ease 0.3s; }
+  .visible .intro-card:nth-child(4) { transition: all 0.6s ease 0.4s; }
+  .card-icon { font-size: 24px; margin-bottom: 12px; }
+  .card-title { font-size: 14px; font-weight: 700; color: var(--cyan); margin-bottom: 8px; }
+  .card-img { width: 100%; height: 100px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+  .card-body { font-size: 13px; color: var(--gray); line-height: 1.8; }
+  .card-body strong { color: var(--white); }
+
+  /* 서브컬쳐 */
+  #subculture { background: var(--dark3); }
+  .def-box { margin-top: 48px; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; }
+  .def-box::before { content: '"'; position: absolute; top: -20px; left: 32px; font-size: 160px; color: rgba(18,136,248,0.08); font-family: 'Inter', sans-serif; font-weight: 900; line-height: 1; }
+  .def-quote { font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; line-height: 1.6; position: relative; z-index: 1; }
+  .def-quote .hl { color: var(--cyan); }
+  .def-source { margin-top: 24px; font-size: 13px; color: var(--gray); position: relative; z-index: 1; }
+  .timeline { margin-top: 48px; display: flex; gap: 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; top: 28px; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+  .tl-item { flex: 1; padding-top: 56px; padding-right: 24px; position: relative; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+  .visible .tl-item { opacity: 1; transform: translateY(0); }
+  .visible .tl-item:nth-child(1) { transition-delay: 0.1s; }
+  .visible .tl-item:nth-child(2) { transition-delay: 0.2s; }
+  .visible .tl-item:nth-child(3) { transition-delay: 0.3s; }
+  .visible .tl-item:nth-child(4) { transition-delay: 0.4s; }
+  .tl-dot { position: absolute; top: 20px; left: 0; width: 16px; height: 16px; background: var(--cyan); border-radius: 50%; border: 3px solid var(--dark3); transform: translateX(-50%); }
+  .tl-year { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 6px; }
+  .tl-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
+
+  /* 변화 */
+  #change { background: var(--dark2); }
+  .change-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 24px; margin-top: 48px; align-items: center; }
+  .change-side { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 36px; opacity: 0; transform: translateX(-30px); transition: all 0.7s ease; }
+  .change-side.right { transform: translateX(30px); border-color: rgba(0,214,250,0.35); background: rgba(0,214,250,0.06); }
+  .visible .change-side { opacity: 1; transform: translateX(0); }
+  .change-label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px; padding: 4px 12px; border-radius: 100px; display: inline-block; }
+  .change-label.past { background: rgba(255,100,100,0.15); color: #FF8888; }
+  .change-label.now { background: rgba(0,214,250,0.15); color: var(--cyan); }
+  .change-arrow { display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--cyan); opacity: 0; transition: all 0.7s ease 0.3s; }
+  .visible .change-arrow { opacity: 1; }
+  .change-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+  .change-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+  .change-dot.red { background: #FF8888; }
+  .change-dot.teal { background: var(--cyan); }
+  .change-item p { font-size: 13px; color: var(--gray); line-height: 1.7; }
+  .change-item p strong { color: var(--white); }
+  .agf-note { margin-top: 48px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 16px; padding: 28px 36px; display: flex; gap: 20px; align-items: flex-start; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.4s; }
+  .visible .agf-note { opacity: 1; transform: translateY(0); }
+  .agf-text { font-size: 14px; color: var(--gray); line-height: 1.8; }
+  .agf-text strong { color: var(--cyan); }
+
+  /* 행사 경험 */
+  #events { background: var(--dark3); }
+  .events-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
+  .event-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+  .event-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+  .visible .event-card { opacity: 1; transform: translateY(0); }
+  .visible .event-card:nth-child(1) { transition-delay: 0.1s; }
+  .visible .event-card:nth-child(2) { transition-delay: 0.2s; }
+  .visible .event-card:nth-child(3) { transition-delay: 0.3s; }
+  .visible .event-card:nth-child(4) { transition-delay: 0.4s; }
+  .event-photos { display: grid; gap: 4px; }
+  .event-photos.two { grid-template-columns: 1fr 1fr; }
+  .event-photos img { width: 100%; height: 160px; object-fit: cover; display: block; }
+  .event-photos.one img { height: 200px; }
+  .event-content { padding: 24px; }
+  .event-num { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.15em; margin-bottom: 8px; }
+  .event-title { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .event-sub { font-size: 12px; color: var(--blue); font-weight: 600; margin-bottom: 12px; }
+  .event-body { font-size: 13px; color: var(--gray); line-height: 1.8; }
+  .event-body strong { color: var(--white); }
+  .event-insight { margin-top: 12px; padding: 10px 14px; background: rgba(0,214,250,0.06); border-left: 3px solid var(--cyan); border-radius: 0 8px 8px 0; font-size: 12px; color: var(--cyan); line-height: 1.7; }
+
+  /* 직무 이해 */
+  #role { background: var(--dark2); }
+  .role-flow { display: flex; gap: 0; margin-top: 48px; align-items: stretch; }
+  .role-node { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px 24px; text-align: center; opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
+  .role-node.highlight { background: rgba(18,136,248,0.15); border-color: var(--blue); }
+  .visible .role-node { opacity: 1; transform: translateY(0); }
+  .visible .role-node.highlight { transform: translateY(-8px) scale(1.04); }
+  .visible .role-node:nth-child(1) { transition-delay: 0.1s; }
+  .visible .role-node:nth-child(2) { transition-delay: 0s; }
+  .visible .role-node:nth-child(3) { transition-delay: 0.2s; }
+  .role-arrow { display: flex; align-items: center; padding: 0 8px; color: var(--cyan); font-size: 20px; opacity: 0; transition: all 0.6s ease 0.3s; }
+  .visible .role-arrow { opacity: 1; }
+  .role-icon { font-size: 32px; margin-bottom: 12px; }
+  .role-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .role-eng { font-size: 11px; color: var(--gray); letter-spacing: 0.08em; margin-bottom: 16px; }
+  .role-desc { font-size: 12px; color: var(--gray); line-height: 1.8; }
+  .role-tasks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
+  .role-task { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; }
+  .visible .role-task { opacity: 1; transform: translateY(0); }
+  .visible .role-task:nth-child(1) { transition-delay: 0.4s; }
+  .visible .role-task:nth-child(2) { transition-delay: 0.5s; }
+  .visible .role-task:nth-child(3) { transition-delay: 0.6s; }
+  .visible .role-task:nth-child(4) { transition-delay: 0.7s; }
+  .role-task-title { font-size: 13px; font-weight: 700; color: var(--cyan); margin-bottom: 8px; }
+  .role-task-body { font-size: 12px; color: var(--gray); line-height: 1.7; }
+
+  /* Lore vs Logo */
+  #lore { background: var(--dark3); }
+  .collab-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .collab-photo-item { position: relative; border-radius: 12px; overflow: hidden; height: 140px; }
+  .collab-photo-item img { width: 100%; height: 100%; object-fit: cover; }
+  .collab-photo-item .caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.85)); padding: 8px 10px; font-size: 10px; color: white; font-weight: 600; }
+  .lore-table { border-radius: 20px; overflow: hidden; border: 1px solid var(--border); opacity: 0; transform: translateY(30px); transition: all 0.7s ease 0.1s; }
+  .visible .lore-table { opacity: 1; transform: translateY(0); }
+  .lore-thead { display: grid; grid-template-columns: 180px 90px 1fr 1fr; background: rgba(18,136,248,0.2); padding: 16px 24px; gap: 16px; }
+  .lore-thead span { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: var(--cyan); text-transform: uppercase; }
+  .lore-row { display: grid; grid-template-columns: 180px 90px 1fr 1fr; padding: 18px 24px; gap: 16px; border-top: 1px solid rgba(255,255,255,0.05); align-items: center; transition: background 0.2s; }
+  .lore-row:hover { background: rgba(255,255,255,0.03); }
+  .lore-case { font-size: 13px; font-weight: 600; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+  .badge.good { background: rgba(50,200,120,0.15); color: #50C878; border: 1px solid rgba(50,200,120,0.3); }
+  .badge.bad { background: rgba(255,100,100,0.15); color: #FF8888; border: 1px solid rgba(255,100,100,0.3); }
+  .lore-body, .lore-insight { font-size: 12px; color: var(--gray); line-height: 1.7; }
+  .lore-conclusion { margin-top: 28px; background: rgba(0,214,250,0.06); border: 1px solid rgba(0,214,250,0.25); border-radius: 16px; padding: 28px 36px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.3s; }
+  .visible .lore-conclusion { opacity: 1; transform: translateY(0); }
+  .lore-conclusion p { font-size: 14px; color: var(--gray); line-height: 1.8; }
+  .lore-conclusion strong { color: var(--cyan); }
+
+  /* 콜라보 제안 */
+  #collab { background: var(--dark2); }
+  .collab-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 48px; }
+  .collab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
+  .collab-card:hover { border-color: var(--cyan); transform: translateY(-6px); }
+  .visible .collab-card { opacity: 1; transform: translateY(0); }
+  .visible .collab-card:nth-child(1) { transition-delay: 0.1s; }
+  .visible .collab-card:nth-child(2) { transition-delay: 0.25s; }
+  .collab-card-img { width: 100%; height: 260px; object-fit: contain; background: #f8f9ff; padding: 16px; display: block; }
+  .collab-card-img.blue-bg { background: #eef9ff; }
+  .collab-header { padding: 20px 28px 16px; border-bottom: 1px solid var(--border); }
+  .collab-num { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 8px; }
+  .collab-name { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .collab-char { font-size: 13px; color: var(--blue); font-weight: 600; }
+  .collab-body { padding: 20px 28px; }
+  .collab-section { margin-bottom: 16px; }
+  .collab-section-title { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .collab-section p { font-size: 13px; color: var(--gray); line-height: 1.8; }
+  .collab-section p strong { color: var(--white); }
+  .color-dots { display: flex; gap: 8px; margin-top: 10px; }
+  .color-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15); }
+  .price-tag { margin-top: 20px; background: rgba(18,136,248,0.1); border: 1px solid rgba(18,136,248,0.3); border-radius: 12px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .price-label { font-size: 11px; color: var(--gray); font-weight: 600; }
+  .price-value { font-size: 17px; font-weight: 800; color: var(--cyan); font-family: 'Inter', sans-serif; }
+
+  /* 마무리 */
+  #closing { background: var(--dark); text-align: center; min-height: 100vh; flex-direction: column; }
+  .closing-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 32px auto; max-width: 700px; }
+  .closing-gallery img { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; }
+  .closing-ring { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 40px; position: relative; opacity: 0; transition: all 0.8s ease; }
+  .visible .closing-ring { opacity: 1; }
+  .closing-ring::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid var(--cyan); }
+  .closing-name-big { font-size: 44px; font-weight: 900; color: var(--blue); }
+  .closing-main { font-size: clamp(24px, 4vw, 42px); font-weight: 800; line-height: 1.3; margin-bottom: 24px; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.2s; }
+  .visible .closing-main { opacity: 1; transform: translateY(0); }
+  .closing-sub { font-size: 15px; color: var(--gray); line-height: 1.9; max-width: 560px; margin: 0 auto 48px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.3s; }
+  .visible .closing-sub { opacity: 1; transform: translateY(0); }
+  .closing-badge { display: inline-block; background: var(--blue); color: var(--white); font-size: 15px; font-weight: 700; padding: 16px 40px; border-radius: 100px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.4s; }
+  .visible .closing-badge { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+  @media (max-width: 768px) {
+    section { padding: 100px 24px 60px; }
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .intro-grid, .events-grid, .collab-cards, .role-tasks { grid-template-columns: 1fr; }
+    .change-grid { grid-template-columns: 1fr; }
+    .change-arrow { transform: rotate(90deg); justify-content: center; }
+    .role-flow { flex-direction: column; }
+    .role-arrow { transform: rotate(90deg); justify-content: center; }
+    .lore-thead, .lore-row { grid-template-columns: 1fr 70px; }
+    .lore-thead span:nth-child(3), .lore-thead span:nth-child(4), .lore-body, .lore-insight { display: none; }
+    .lore-body { display: block; }
+    .hero-photo { display: none; }
+    .closing-gallery { grid-template-columns: 1fr 1fr; }
+    .collab-photos { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">HOJOON · IP LICENSE</div>
+  <ul class="nav-links">
+    <li><a href="#intro">자기소개</a></li>
+    <li><a href="#subculture">서브컬쳐</a></li>
+    <li><a href="#events">행사경험</a></li>
+    <li><a href="#role">직무이해</a></li>
+    <li><a href="#lore">분석</a></li>
+    <li><a href="#collab">제안</a></li>
+  </ul>
+</nav>
+
+<!-- 1. 히어로 -->
+<section id="hero">
+  <canvas id="canvas-bg"></canvas>
+  <div class="hero-content">
+    <div class="hero-tag">블루아카이브 IP 라이선스 직무 지원자</div>
+    <h1 class="hero-main">
+      화면 너머의 일상,<br>
+      <span class="line2">키보토스를 현실로.</span>
+    </h1>
+    <p class="hero-sub">서브컬쳐 산업의 성장을 직접 경험한 유저의 시각으로<br>블루아카이브 IP의 현재와 미래를 설계합니다.</p>
+    <div class="hero-name">
+      <span class="hero-name-text">정 호 준</span>
+      <span class="hero-name-role">IP License Candidate</span>
+    </div>
+    <div class="hero-tags">
+      <span class="hero-chip active">JLPT N1</span>
+      <span class="hero-chip active">웹 개발 3년</span>
+      <span class="hero-chip">2022~ 장기 플레이</span>
+      <span class="hero-chip">다수 행사 참여</span>
+      <span class="hero-chip">키보토스 런 완주</span>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="hero-photo-wrap">
+      <img src="imgs/hero.jpg" alt="키보토스 런 완주" />
+    </div>
+    <div class="hero-photo-caption">
+      <div class="sub">KIVOTOS RUN 2026</div>
+      <div class="main">완주 기록 25:18 · C2811</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 자기소개 -->
+<section id="intro">
+  <div class="section-inner">
+    <p class="eyebrow">About Me</p>
+    <h2 class="section-title">언어와 기술, 그리고 <span class="accent">팬덤의 시각</span></h2>
+    <div class="section-body">
+      <div class="profile-card">
+        <img src="imgs/profile.png" alt="정호준 프로필" />
+        <div>
+          <div class="profile-name">정 호 준</div>
+          <div class="profile-sub">IP를 현실 경험으로 확장하는 것에 관심이 있습니다.</div>
+          <div class="profile-tags">
+            <span class="profile-tag">JLPT N1</span>
+            <span class="profile-tag">2022~ 장기 플레이</span>
+            <span class="profile-tag">키보토스 런 완주</span>
+          </div>
+        </div>
+      </div>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <div class="card-icon">🇯🇵</div>
+          <div class="card-title">JLPT N1</div>
+          <div class="card-body">일본어 <strong>최고 등급 보유</strong>. 블루아카이브는 일본에서 먼저 서비스된 게임인 만큼, 일본 파트너사와의 직접 커뮤니케이션 및 원문 자료 검토가 가능합니다. 국비과정에서 동료 수강생들에게 기초 일본어를 강의한 경험도 있습니다.</div>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon">💻</div>
+          <div class="card-title">웹 개발 경험</div>
+          <div class="card-body">서울시교육청 산하기관 홈페이지 <strong>유지보수 및 기능개발</strong> (2021~2024). 콜라보 및 상품 페이지의 구조와 사용자 경험에 대한 이해를 갖추고 있습니다.</div>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon">🎮</div>
+          <div class="card-title">2022년부터 장기 플레이</div>
+          <img src="imgs/raid.jpg" alt="대결전 124층" class="card-img" />
+          <div class="card-body">메타 변화와 캐릭터 소비 구조를 직접 체감. <strong>제약해제결전 124층 클리어</strong>, 총력전 플래티넘 달성. 인게임 메타가 유저 리텐션에 미치는 영향을 분석하고 있습니다.</div>
+        </div>
+        <div class="intro-card">
+          <div class="card-icon">⭐</div>
+          <div class="card-title">행사 참여 경험</div>
+          <div class="card-body">AGF · 주년 페스티벌 · 오케스트라 · 카페 메모리얼 · 키보토스 런 · 팝업스토어 등 <strong>다수의 오프라인 행사</strong>에 직접 참여. IP 비즈니스 현장을 유저이자 분석자의 시각으로 경험했습니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 서브컬쳐 정의 -->
+<section id="subculture">
+  <div class="section-inner">
+    <p class="eyebrow">Definition</p>
+    <h2 class="section-title">서브컬쳐란 <span class="accent">무엇인가</span></h2>
+    <div class="section-body">
+      <div class="def-box">
+        <p class="def-quote">서브컬쳐는 단순한 '비주류 문화'가 아닙니다.<br>유저들이 <span class="hl">자발적으로 소비하고 확산시키는</span><br>고관여 팬덤 기반의 <span class="hl">콘텐츠 산업</span>입니다.</p>
+        <p class="def-source">— 오프라인 행사 다수 참여, 장기 플레이 유저의 시각에서</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">과거</div><div class="tl-text">오타쿠, 씹덕 등의 혐오 표현으로 불렸던 비주류 문화. 숨겨야 하는 취미였습니다.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">변화의 시작</div><div class="tl-text">유튜브·SNS 발달, 스마트폰 성능 향상, PC게임 시장 부진으로 모바일 게임 시장이 성장했습니다.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">글로벌 확산</div><div class="tl-text">일본의 서브컬쳐 게임이 전 세계로 퍼지며 '서브컬쳐'라는 단어 자체가 정의되기 시작합니다.</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">현재</div><div class="tl-text">과하지 않은 선에서는 자연스러운 취미로 인식. 메인스트림 문화로 진입 중입니다.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 변화 -->
+<section id="change">
+  <div class="section-inner">
+    <p class="eyebrow">Then &amp; Now</p>
+    <h2 class="section-title">서브컬쳐 인식의 <span class="accent">변화</span></h2>
+    <div class="section-body">
+      <div class="change-grid">
+        <div class="change-side">
+          <span class="change-label past">PAST</span>
+          <div class="change-item"><div class="change-dot red"></div><p>오타쿠, 씹덕 등 <strong>혐오 표현</strong>으로 불리던 시절</p></div>
+          <div class="change-item"><div class="change-dot red"></div><p>숨겨야 하는 취미, <strong>사회적 낙인</strong></p></div>
+          <div class="change-item"><div class="change-dot red"></div><p>모바일 게임 시장 규모 작음, <strong>PC 게임 중심</strong></p></div>
+          <div class="change-item"><div class="change-dot red"></div><p>일본 서브컬쳐 게임은 <strong>일부 마니아</strong>만 즐기는 콘텐츠</p></div>
+        </div>
+        <div class="change-arrow">→</div>
+        <div class="change-side right">
+          <span class="change-label now">NOW</span>
+          <div class="change-item"><div class="change-dot teal"></div><p><strong>"미소녀게임 하는 사람"</strong>으로 자연스러운 인식</p></div>
+          <div class="change-item"><div class="change-dot teal"></div><p>AGF 등 서브컬쳐 행사 <strong>규모 확대, 주류화</strong></p></div>
+          <div class="change-item"><div class="change-dot teal"></div><p>더현대 팝업, 백화점 콜라보 등 <strong>프리미엄 공간 진출</strong></p></div>
+          <div class="change-item"><div class="change-dot teal"></div><p>선정적 콘텐츠 자체 규제 → <strong>자정 작용, 성숙한 산업으로</strong></p></div>
+        </div>
+      </div>
+      <div class="agf-note">
+        <div style="font-size:28px;flex-shrink:0;">📊</div>
+        <div class="agf-text"><strong>AGF 직접 관찰 인사이트</strong> — 매년 참가하면서 체감한 변화: 규모는 확실히 커졌고, 과거엔 버젓이 판매되던 수위 높은 동인지나 선정적 콘텐츠가 이제는 자체적으로 규제되고 있습니다. 이는 서브컬쳐가 단순 비주류에서 벗어나 <strong>사회적으로 수용 가능한 형태로 진화</strong>하고 있다는 증거입니다.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 행사 경험 -->
+<section id="events">
+  <div class="section-inner">
+    <p class="eyebrow">Field Experience</p>
+    <h2 class="section-title">현장에서 <span class="accent">직접 본 것들</span></h2>
+    <div class="section-body">
+      <div class="events-grid">
+        <div class="event-card">
+          <div class="event-photos two">
+            <img src="imgs/festival2.jpg" alt="블루아카이브 페스티벌" />
+            <img src="imgs/festival3.jpg" alt="블루아카이브 페스티벌 4.5주년" />
+          </div>
+          <div class="event-content">
+            <div class="event-num">EVENT 01</div>
+            <div class="event-title">블루아카이브 주년 페스티벌</div>
+            <div class="event-sub">매년 참가 · 일산 킨텍스 1·2홀</div>
+            <div class="event-body">표가 순식간에 매진될 만큼 높은 팬덤 수요. <strong>해를 거듭할수록 운영이 고도화</strong>되는 걸 직접 확인. 4.5주년에는 2차창작 작가들의 독립 판매 공간까지 마련 — 팬덤 생태계 전체를 공식이 포용하는 방식.</div>
+            <div class="event-insight">💡 IP가 팬덤 문화 자체를 생태계 안으로 끌어들이는 전략</div>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-photos one">
+            <img src="imgs/agf.jpg" alt="AGF 2022" />
+          </div>
+          <div class="event-content">
+            <div class="event-num">EVENT 02</div>
+            <div class="event-title">AGF (애니메이션·게임 페스티벌)</div>
+            <div class="event-sub">매년 참가 · 서울코믹월드 포함</div>
+            <div class="event-body">처음 갔을 때의 충격 — 코스어들의 자유로운 문화, 팬덤 굿즈의 다양함. 매년 <strong>규모가 지속적으로 확대</strong>되고 선정적 콘텐츠가 자연스럽게 줄어드는 <strong>자정 작용</strong>을 직접 목격.</div>
+            <div class="event-insight">💡 서브컬쳐 산업의 성숙화를 보여주는 살아있는 지표</div>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-photos one">
+            <img src="imgs/zenless.jpg" alt="젠레스존제로 팝업" />
+          </div>
+          <div class="event-content">
+            <div class="event-num">EVENT 03</div>
+            <div class="event-title">젠레스존제로 팝업스토어</div>
+            <div class="event-sub">여의도 더현대 · 애플 에어팟맥스 콜라보</div>
+            <div class="event-body">중국 게임사가 <strong>더현대 프리미엄 공간</strong>에 팝업을 열었다는 것 자체가 놀라움. <strong>애플 에어팟맥스와의 콜라보</strong>로 글로벌 테크 브랜드와의 IP 협업 스케일을 체감. 아이돌 1대1 미팅처럼 설계된 캐릭터 경험 부스.</div>
+            <div class="event-insight">💡 서브컬쳐 IP가 프리미엄 브랜드와 대등하게 협업할 수 있다는 증명</div>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-photos two">
+            <img src="imgs/lastorigin.jpg" alt="라스트오리진 콜라보카페" />
+            <img src="imgs/cafe1.jpg" alt="카페 메모리얼" />
+          </div>
+          <div class="event-content">
+            <div class="event-num">EVENT 04</div>
+            <div class="event-title">라스트오리진 콜라보카페 · 카페 메모리얼 외</div>
+            <div class="event-sub">오케스트라 · 키보토스 런 · 헌혈 캠페인</div>
+            <div class="event-body">19금 게임인 라스트오리진도 콜라보카페를 여는 것을 보며 <strong>장르·수위에 관계없이 오프라인 확장</strong>이 이뤄지고 있음을 확인. 키보토스 런 완주(25:18), 오케스트라 다회차 관람 등 IP가 <strong>일상의 다양한 영역으로 스며드는 방식</strong>을 경험.</div>
+            <div class="event-insight">💡 IP 확장의 방식은 무한하다 — 굿즈를 넘어 경험으로</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. 직무 이해 -->
+<section id="role">
+  <div class="section-inner">
+    <p class="eyebrow">Role Understanding</p>
+    <h2 class="section-title">IP 라이선스 담당자의 <span class="accent">역할</span></h2>
+    <div class="section-body">
+      <div class="role-flow">
+        <div class="role-node"><div class="role-icon">🎮</div><div class="role-name">개발사</div><div class="role-eng">NEXON GAMES</div><div class="role-desc">인게임 콘텐츠 개발<br>스토리 · 캐릭터 · OST</div></div>
+        <div class="role-arrow">→</div>
+        <div class="role-node highlight"><div class="role-icon">⚡</div><div class="role-name">라이선싱</div><div class="role-eng">IO DIVISION</div><div class="role-desc">게임 외부 IP 확장<br>상품화 · 콜라보 · 감수</div></div>
+        <div class="role-arrow">→</div>
+        <div class="role-node"><div class="role-icon">🌏</div><div class="role-name">퍼블리셔</div><div class="role-eng">NEXON / YOSTAR</div><div class="role-desc">지역별 서비스 운영<br>마케팅</div></div>
+      </div>
+      <div class="role-tasks">
+        <div class="role-task"><div class="role-task-title">라이선스 이슈 협의 및 관리</div><div class="role-task-body">국내외 라이브 서비스 시 발생하는 라이선스 이슈를 파트너사와 협의하고 관리합니다.</div></div>
+        <div class="role-task"><div class="role-task-title">계약 검토 및 관리</div><div class="role-task-body">퍼블리싱, 상품화 계약 등을 검토하고 관리합니다. N1 보유로 일본 파트너사 원문 자료 직접 검토 가능합니다.</div></div>
+        <div class="role-task"><div class="role-task-title">IP 상품화 감수</div><div class="role-task-body">IP 미디어 믹스 상품화 전개를 위한 감수를 담당합니다. 직접 소비한 팬으로서 IP 훼손 여부를 판단할 수 있습니다.</div></div>
+        <div class="role-task"><div class="role-task-title">라이선스 전략 수립</div><div class="role-task-body">지표, 시장 상황, 유저 동향 등 인사이트에 기반한 라이선스 전략을 수립하고 실행합니다.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Lore vs Logo -->
+<section id="lore">
+  <div class="section-inner">
+    <p class="eyebrow">Market Analysis</p>
+    <h2 class="section-title">Lore vs. <span class="accent">Logo</span></h2>
+    <div class="section-body">
+      <div class="collab-photos">
+        <div class="collab-photo-item"><img src="imgs/moms.jpg" alt="맘스터치 콜라보" /><div class="caption">맘스터치 콜라보 현장</div></div>
+        <div class="collab-photo-item"><img src="imgs/blood.jpg" alt="헌혈 참여" /><div class="caption">대한적십자사 헌혈 참여</div></div>
+        <div class="collab-photo-item"><img src="imgs/gs.jpg" alt="GS25 콜라보" /><div class="caption">GS25 콜라보</div></div>
+      </div>
+      <div class="lore-table">
+        <div class="lore-thead"><span>사례</span><span>평가</span><span>주요반응</span><span>인사이트</span></div>
+        <div class="lore-row"><div class="lore-case">이디야 커피</div><div><span class="badge good">긍정</span></div><div class="lore-body">낮은 가격, 굿즈 퀄리티 호평, 식사 대용 가능</div><div class="lore-insight">가격·퀄리티 균형이 팬덤 자발적 홍보로 이어진 사례</div></div>
+        <div class="lore-row"><div class="lore-case">맘스터치</div><div><span class="badge good">긍정</span></div><div class="lore-body">일상 브랜드와 자연스러운 연결, 구성 만족도 높음</div><div class="lore-insight">기존 소비 브랜드 협업이 구매 허들을 낮추고 시너지 극대화</div></div>
+        <div class="lore-row"><div class="lore-case">대한적십자사</div><div><span class="badge good">긍정</span></div><div class="lore-body">비팬덤 행동 변화 유도, 구호기사단 세계관 연결 호평</div><div class="lore-insight">IP가 사회적 맥락과 연결될 때 팬덤 외부로 브랜드 이미지 확장</div></div>
+        <div class="lore-row"><div class="lore-case">현대백화점 × PEER</div><div><span class="badge bad">아쉬움</span></div><div class="lore-body">재활용 의혹, 사과문 논란, 장기 부정 이미지</div><div class="lore-insight">IP 감수 부재·파트너사 관리 실패가 장기적 신뢰 훼손</div></div>
+        <div class="lore-row"><div class="lore-case">소니 헤드셋</div><div><span class="badge bad">아쉬움</span></div><div class="lore-body">장식 굿즈 수준, 재고 처리 의혹, 차별화 부재</div><div class="lore-insight">IP가 단순 장식에 그칠 때 구매 명분이 사라짐</div></div>
+        <div class="lore-row"><div class="lore-case">서브컬쳐 업계 전반</div><div><span class="badge bad">아쉬움</span></div><div class="lore-body">아크릴스탠드, 초코푸니 등 장식형 굿즈에 편중</div><div class="lore-insight">소장 가치는 있으나 실생활 사용 빈도가 낮아 일회성 소비에 그침</div></div>
+      </div>
+      <div class="lore-conclusion"><p>단순한 <strong>로고 차용을 지양</strong>하고, 캐릭터의 고유한 서사를 제품의 기능적 본질과 일치시키는 <strong>'실사용 기반의 상품 확장'</strong>을 통해 팬덤의 라이프스타일 접점을 더 넓게 확장해야 합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. 콜라보 제안 -->
+<section id="collab">
+  <div class="section-inner">
+    <p class="eyebrow">Collab Proposal</p>
+    <h2 class="section-title">실사용 기반 <span class="accent">콜라보 제안</span></h2>
+    <div class="section-body">
+      <div class="collab-cards">
+        <div class="collab-card">
+          <img src="imgs/sumire_shoes.png" alt="스미레 러닝화" class="collab-card-img" />
+          <div class="collab-header">
+            <div class="collab-num">CONCEPT 01</div>
+            <div class="collab-name">스미레의 퍼포먼스 러닝화</div>
+            <div class="collab-char">오토하나 스미레 × 밀레니엄 사이언스 스쿨</div>
+          </div>
+          <div class="collab-body">
+            <div class="collab-section"><div class="collab-section-title">Lore Match</div><p>"건강한 신체에 건전한 정신"을 모토로 하는 밀레니엄의 운동 아이콘 스미레. <strong>캐릭터 서사가 제품의 기능적 본질과 완벽하게 일치</strong>합니다.</p></div>
+            <div class="collab-section"><div class="collab-section-title">Color Palette</div><div class="color-dots"><div class="color-dot" style="background:#E8E0F5;"></div><div class="color-dot" style="background:#C9A8E0;"></div><div class="color-dot" style="background:#1288F8;"></div><div class="color-dot" style="background:#2B2B2B;"></div></div></div>
+            <div class="price-tag"><span class="price-label">SUGGESTED PRICE</span><span class="price-value">119,000 ~ 149,000원</span></div>
+          </div>
+        </div>
+        <div class="collab-card">
+          <img src="imgs/shiroko_bottle.png" alt="시로코 물병" class="collab-card-img blue-bg" />
+          <div class="collab-header">
+            <div class="collab-num">CONCEPT 02</div>
+            <div class="collab-name">시로코의 사이클링 물병</div>
+            <div class="collab-char">스나오오카미 시로코 × 아비도스 대책위원회</div>
+          </div>
+          <div class="collab-body">
+            <div class="collab-section"><div class="collab-section-title">Lore Match</div><p>자전거 라이딩을 즐기는 액티브파 시로코. 팬덤 유행어 <strong>'후토스토(フトスト)'</strong> 밈을 제품 스토리텔링에 녹여 심리적 만족감을 극대화합니다.</p></div>
+            <div class="collab-section"><div class="collab-section-title">Color Palette</div><div class="color-dots"><div class="color-dot" style="background:#C8EEFF;"></div><div class="color-dot" style="background:#00D6FA;"></div><div class="color-dot" style="background:#1288F8;"></div><div class="color-dot" style="background:#2B2B2B;"></div></div></div>
+            <div class="price-tag"><span class="price-label">SUGGESTED PRICE</span><span class="price-value">18,000 ~ 25,000원</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. 마무리 -->
+<section id="closing">
+  <div class="section-inner" style="text-align:center;">
+    <div class="closing-ring"><span class="closing-name-big">정호준</span></div>
+    <div class="closing-gallery">
+      <img src="imgs/orchestra.jpg" alt="사운드아카이브 오케스트라" />
+      <img src="imgs/festival1.jpg" alt="블루아카이브 페스티벌" />
+      <img src="imgs/run_cert.jpg" alt="키보토스 런 완주증" />
+    </div>
+    <h2 class="closing-main">플레이어의 감동을<br><span style="color:var(--cyan)">비즈니스의 확신으로.</span></h2>
+    <p class="closing-sub">블루 아카이브는 저에게 단순한 게임이 아닙니다.<br>IP가 현실의 경험으로 확장될 수 있다는 가능성을 보여준 콘텐츠였습니다.<br><br>오프라인 행사와 다양한 콜라보를 직접 경험하며,<br>유저가 어떤 순간에 즐거움을 느끼고 소비로 이어지는지 고민하게 되었습니다.<br><br>이 경험을 바탕으로, 유저와 브랜드 모두가 만족할 수 있는 IP 경험을 함께 만들고 싶습니다.</p>
+    <div class="closing-badge">준비된 IP 라이선스 담당자, 정호준입니다.</div>
+  </div>
+</section>
+
+<script>
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.speedY = (Math.random() - 0.5) * 0.4;
+    this.opacity = Math.random() * 0.5 + 0.1;
+    this.color = Math.random() > 0.5 ? '18,136,248' : '0,214,250';
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${this.color},${this.opacity})`;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  particles.forEach((p, i) => {
+    particles.slice(i + 1).forEach(q => {
+      const d = Math.hypot(p.x - q.x, p.y - q.y);
+      if (d < 100) {
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = `rgba(18,136,248,${0.08 * (1 - d / 100)})`;
+        ctx.lineWidth = 0.5; ctx.stroke();
+      }
+    });
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('section').forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
