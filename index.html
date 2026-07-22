@@ -86,25 +86,29 @@
 
   /* 자기소개 */
   #intro { background: var(--dark2); }
-  .profile-card { display: flex; align-items: center; gap: 28px; margin-bottom: 36px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 20px; padding: 24px 32px; }
-  .profile-card img { width: 100px; height: 130px; object-fit: cover; object-position: center top; border-radius: 12px; border: 2px solid rgba(0,214,250,0.4); flex-shrink: 0; }
+  .intro-layout { display: grid; grid-template-columns: 1fr 340px; gap: 36px; align-items: start; }
+  .intro-list { display: flex; flex-direction: column; gap: 16px; }
+  .intro-row { display: flex; align-items: flex-start; gap: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 24px 28px; transition: all 0.3s; opacity: 0; transform: translateY(24px); }
+  .intro-row:hover { border-color: var(--cyan); transform: translateY(-3px); }
+  .visible .intro-row { opacity: 1; transform: translateY(0); }
+  .visible .intro-row:nth-child(1) { transition: all 0.6s ease 0.1s; }
+  .visible .intro-row:nth-child(2) { transition: all 0.6s ease 0.2s; }
+  .visible .intro-row:nth-child(3) { transition: all 0.6s ease 0.3s; }
+  .visible .intro-row:nth-child(4) { transition: all 0.6s ease 0.4s; }
+  .intro-row-icon { flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px; background: rgba(18,136,248,0.12); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .intro-row-content { flex: 1; }
+  .intro-row-title { font-size: 14px; font-weight: 700; color: var(--cyan); margin-bottom: 8px; }
+  .intro-row-body { font-size: 13px; color: var(--gray); line-height: 1.8; }
+  .intro-row-body strong { color: var(--white); }
+  .intro-row-thumb { flex-shrink: 0; width: 110px; height: 78px; object-fit: cover; border-radius: 10px; align-self: center; }
+  .intro-photo-card { background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; opacity: 0; transform: translateY(24px); transition: all 0.7s ease 0.15s; position: sticky; top: 110px; }
+  .visible .intro-photo-card { opacity: 1; transform: translateY(0); }
+  .intro-photo-card img { width: 100%; height: 420px; object-fit: cover; object-position: center top; display: block; }
+  .intro-photo-caption { padding: 22px 26px; }
   .profile-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
   .profile-sub { font-size: 13px; color: var(--cyan); margin-bottom: 12px; }
   .profile-tags { display: flex; gap: 8px; flex-wrap: wrap; }
   .profile-tag { background: rgba(18,136,248,0.15); border: 1px solid rgba(18,136,248,0.4); border-radius: 100px; padding: 4px 12px; font-size: 11px; color: var(--cyan); font-weight: 700; }
-  .intro-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .intro-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px; transition: all 0.3s; opacity: 0; transform: translateY(30px); }
-  .intro-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
-  .visible .intro-card { opacity: 1; transform: translateY(0); }
-  .visible .intro-card:nth-child(1) { transition: all 0.6s ease 0.1s; }
-  .visible .intro-card:nth-child(2) { transition: all 0.6s ease 0.2s; }
-  .visible .intro-card:nth-child(3) { transition: all 0.6s ease 0.3s; }
-  .visible .intro-card:nth-child(4) { transition: all 0.6s ease 0.4s; }
-  .card-icon { font-size: 24px; margin-bottom: 12px; }
-  .card-title { font-size: 14px; font-weight: 700; color: var(--cyan); margin-bottom: 8px; }
-  .card-img { width: 100%; height: 100px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
-  .card-body { font-size: 13px; color: var(--gray); line-height: 1.8; }
-  .card-body strong { color: var(--white); }
 
   /* 서브컬쳐 */
   #subculture { background: var(--dark3); }
@@ -266,6 +270,10 @@
     nav { padding: 14px 24px; }
     .nav-links { display: none; }
     .intro-grid, .events-grid, .collab-cards, .role-tasks { grid-template-columns: 1fr; }
+    .intro-layout { grid-template-columns: 1fr; }
+    .intro-photo-card { position: static; order: -1; }
+    .intro-photo-card img { height: 280px; }
+    .intro-row-thumb { display: none; }
     .change-grid { grid-template-columns: 1fr; }
     .change-arrow { transform: rotate(90deg); justify-content: center; }
     .role-flow { flex-direction: column; }
@@ -322,39 +330,49 @@
     <p class="eyebrow">About Me</p>
     <h2 class="section-title">언어와 기술, 그리고 <span class="accent">팬덤의 시각</span></h2>
     <div class="section-body">
-      <div class="profile-card">
-        <img src="imgs/profile.png" alt="정호준 프로필" />
-        <div>
-          <div class="profile-name">정 호 준</div>
-          <div class="profile-sub">IP를 현실 경험으로 확장하는 것에 관심이 있습니다.</div>
-          <div class="profile-tags">
-            <span class="profile-tag">JLPT N1</span>
-            <span class="profile-tag">2022~ 장기 플레이</span>
-            <span class="profile-tag">키보토스 런 완주</span>
+      <div class="intro-layout">
+        <div class="intro-list">
+          <div class="intro-row">
+            <div class="intro-row-icon">🇯🇵</div>
+            <div class="intro-row-content">
+              <div class="intro-row-title">JLPT N1</div>
+              <div class="intro-row-body">일본어 <strong>최고 등급 보유</strong>. 블루아카이브는 일본에서 먼저 서비스된 게임인 만큼, 일본 파트너사와의 직접 커뮤니케이션 및 원문 자료 검토가 가능합니다. 국비과정에서 동료 수강생들에게 기초 일본어를 강의한 경험도 있습니다.</div>
+            </div>
+          </div>
+          <div class="intro-row">
+            <div class="intro-row-icon">💻</div>
+            <div class="intro-row-content">
+              <div class="intro-row-title">웹 개발 경험</div>
+              <div class="intro-row-body">서울시교육청 산하기관 홈페이지 <strong>유지보수 및 기능개발</strong> (2021~2024). 콜라보 및 상품 페이지의 구조와 사용자 경험에 대한 이해를 갖추고 있습니다.</div>
+            </div>
+          </div>
+          <div class="intro-row">
+            <div class="intro-row-icon">🎮</div>
+            <div class="intro-row-content">
+              <div class="intro-row-title">2022년부터 장기 플레이</div>
+              <div class="intro-row-body">메타 변화와 캐릭터 소비 구조를 직접 체감. <strong>제약해제결전 124층 클리어</strong>, 총력전 플래티넘 달성. 인게임 메타가 유저 리텐션에 미치는 영향을 분석하고 있습니다.</div>
+            </div>
+            <img src="imgs/raid.jpg" alt="대결전 124층" class="intro-row-thumb" />
+          </div>
+          <div class="intro-row">
+            <div class="intro-row-icon">⭐</div>
+            <div class="intro-row-content">
+              <div class="intro-row-title">행사 참여 경험</div>
+              <div class="intro-row-body">AGF · 주년 페스티벌 · 오케스트라 · 카페 메모리얼 · 키보토스 런 · 팝업스토어 등 <strong>다수의 오프라인 행사</strong>에 직접 참여. IP 비즈니스 현장을 유저이자 분석자의 시각으로 경험했습니다.</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="intro-grid">
-        <div class="intro-card">
-          <div class="card-icon">🇯🇵</div>
-          <div class="card-title">JLPT N1</div>
-          <div class="card-body">일본어 <strong>최고 등급 보유</strong>. 블루아카이브는 일본에서 먼저 서비스된 게임인 만큼, 일본 파트너사와의 직접 커뮤니케이션 및 원문 자료 검토가 가능합니다. 국비과정에서 동료 수강생들에게 기초 일본어를 강의한 경험도 있습니다.</div>
-        </div>
-        <div class="intro-card">
-          <div class="card-icon">💻</div>
-          <div class="card-title">웹 개발 경험</div>
-          <div class="card-body">서울시교육청 산하기관 홈페이지 <strong>유지보수 및 기능개발</strong> (2021~2024). 콜라보 및 상품 페이지의 구조와 사용자 경험에 대한 이해를 갖추고 있습니다.</div>
-        </div>
-        <div class="intro-card">
-          <div class="card-icon">🎮</div>
-          <div class="card-title">2022년부터 장기 플레이</div>
-          <img src="imgs/raid.jpg" alt="대결전 124층" class="card-img" />
-          <div class="card-body">메타 변화와 캐릭터 소비 구조를 직접 체감. <strong>제약해제결전 124층 클리어</strong>, 총력전 플래티넘 달성. 인게임 메타가 유저 리텐션에 미치는 영향을 분석하고 있습니다.</div>
-        </div>
-        <div class="intro-card">
-          <div class="card-icon">⭐</div>
-          <div class="card-title">행사 참여 경험</div>
-          <div class="card-body">AGF · 주년 페스티벌 · 오케스트라 · 카페 메모리얼 · 키보토스 런 · 팝업스토어 등 <strong>다수의 오프라인 행사</strong>에 직접 참여. IP 비즈니스 현장을 유저이자 분석자의 시각으로 경험했습니다.</div>
+        <div class="intro-photo-card">
+          <img src="imgs/profile.png" alt="정호준 프로필" />
+          <div class="intro-photo-caption">
+            <div class="profile-name">정 호 준</div>
+            <div class="profile-sub">IP를 현실 경험으로 확장하는 것에 관심이 있습니다.</div>
+            <div class="profile-tags">
+              <span class="profile-tag">JLPT N1</span>
+              <span class="profile-tag">2022~ 장기 플레이</span>
+              <span class="profile-tag">키보토스 런 완주</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
