@@ -32,8 +32,16 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; zoom: 1.54; } /* 13px -> 약 20px, 박스/여백도 동일 비율로 확대 */
   body {
-    background: linear-gradient(180deg, var(--skyBlue) 0%, var(--skyLavender) 25%, var(--skyPink) 55%, var(--skyPeach) 80%, var(--dark) 100%);
-    background-attachment: fixed;
+    background: linear-gradient(180deg,
+      var(--dark) 0%,
+      var(--dark2) 12.5%,
+      var(--dark3) 25%,
+      var(--dark2) 37.5%,
+      var(--dark3) 50%,
+      var(--dark2) 62.5%,
+      var(--dark3) 75%,
+      var(--dark2) 87.5%,
+      var(--dark) 100%);
     color: var(--white);
     font-family: 'Noto Sans KR', sans-serif;
     overflow-x: hidden;
@@ -67,7 +75,7 @@
   .visible .eyebrow, .visible .section-title, .visible .section-body { opacity: 1; transform: translateY(0); }
 
   /* 히어로 */
-  #hero { min-height: 100vh; background: var(--dark); flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-left: 0; }
+  #hero { min-height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-left: 0; }
   #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
   #canvas-bg-closing { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
   #closing .section-inner { position: relative; z-index: 1; }
@@ -87,7 +95,7 @@
   @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
   /* 자기소개 */
-  #intro { background: var(--dark2); }
+  #intro { }
   .intro-layout { display: grid; grid-template-columns: 1fr 340px; gap: 36px; align-items: stretch; }
   .intro-list { display: flex; flex-direction: column; gap: 16px; }
   .intro-row { display: flex; align-items: flex-start; gap: 18px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 24px 28px; transition: all 0.3s; opacity: 0; transform: translateY(24px); }
@@ -108,7 +116,7 @@
   .intro-photo-card img { width: 100%; height: 100%; object-fit: contain; background: transparent; display: block; }
 
   /* 서브컬쳐 */
-  #subculture { background: var(--dark3); }
+  #subculture { }
   .def-box { margin-top: 48px; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 48px; position: relative; overflow: hidden; }
   .def-box::before { content: '"'; position: absolute; top: -20px; left: 32px; font-size: 160px; color: rgba(18,136,248,0.08); font-family: 'Inter', sans-serif; font-weight: 900; line-height: 1; }
   .def-quote { font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; line-height: 1.6; position: relative; z-index: 1; }
@@ -127,7 +135,7 @@
   .tl-text { font-size: 13px; color: var(--gray); line-height: 1.7; }
 
   /* 변화 */
-  #change { background: var(--dark2); }
+  #change { }
   .change-grid { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 24px; margin-top: 48px; align-items: center; }
   .change-side { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 36px; opacity: 0; transform: translateX(-30px); transition: all 0.7s ease; }
   .change-side.right { transform: translateX(30px); border-color: rgba(0,214,250,0.35); background: rgba(0,214,250,0.06); }
@@ -149,7 +157,7 @@
   .agf-text strong { color: var(--cyan); }
 
   /* 행사 경험 */
-  #events { background: var(--dark3); }
+  #events { }
   .events-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
   .events-insight-box { margin-top: 28px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 20px; padding: 36px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.3s; }
   .visible .events-insight-box { opacity: 1; transform: translateY(0); }
@@ -178,7 +186,7 @@
   .event-insight { margin-top: 12px; padding: 10px 14px; background: rgba(0,214,250,0.06); border-left: 3px solid var(--cyan); border-radius: 0 8px 8px 0; font-size: 12px; color: var(--cyan); line-height: 1.7; }
 
   /* 직무 이해 */
-  #role { background: var(--dark2); }
+  #role { }
   .role-flow { display: flex; gap: 0; margin-top: 48px; align-items: stretch; }
   .role-node { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 32px 24px; text-align: center; opacity: 0; transform: translateY(24px); transition: all 0.6s ease; }
   .role-node.highlight { background: rgba(18,136,248,0.15); border-color: var(--blue); }
@@ -207,7 +215,7 @@
   .role-task-body { font-size: 12px; color: var(--gray); line-height: 1.7; }
 
   /* Lore vs Logo */
-  #lore { background: var(--dark3); }
+  #lore { }
   .collab-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
   .collab-photo-item { position: relative; border-radius: 12px; overflow: hidden; height: 140px; background: #f8f9ff; }
   .collab-photo-item img { width: 100%; height: 100%; object-fit: contain; }
@@ -229,7 +237,7 @@
   .lore-conclusion strong { color: var(--cyan); }
 
   /* 콜라보 제안 */
-  #collab { background: var(--dark2); }
+  #collab { }
   .collab-rationale { margin-top: 40px; }
   .collab-rationale-quote { font-size: clamp(17px, 2vw, 22px); font-weight: 700; line-height: 1.6; padding: 28px 32px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 18px; }
   .collab-rationale-quote .hl { color: var(--cyan); }
@@ -243,7 +251,7 @@
   .visible .collab-card { opacity: 1; transform: translateY(0); }
   .visible .collab-card:nth-child(1) { transition-delay: 0.1s; }
   .visible .collab-card:nth-child(2) { transition-delay: 0.25s; }
-  .collab-gallery { display: grid; gap: 6px; background: #FFFFFF; }
+  .collab-gallery { display: grid; gap: 6px; background: #f8f9ff; }
   .collab-gallery.blue-bg { background: #eef9ff; }
   .collab-gallery.g4 { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); }
   .collab-gallery.g2 { grid-template-columns: repeat(2, 1fr); }
@@ -265,7 +273,7 @@
   .price-value { font-size: 17px; font-weight: 800; color: var(--cyan); font-family: 'Inter', sans-serif; }
 
   /* 애정도 */
-  #devotion { background: var(--dark); }
+  #devotion { }
   .devotion-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
   .devotion-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
   .devotion-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
