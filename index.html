@@ -69,6 +69,8 @@
   /* 히어로 */
   #hero { min-height: 100vh; background: var(--dark); flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-left: 0; }
   #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+  #canvas-bg-closing { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+  #closing .section-inner { position: relative; z-index: 1; }
   .hero-content { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 214, 250, 0.1); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; font-size: 12px; color: var(--cyan); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 32px; animation: fadeUp 0.8s ease forwards; }
   .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--cyanGlow); border-radius: 50%; animation: pulse 2s infinite; }
@@ -631,6 +633,7 @@
 
 <!-- 9. 마무리 -->
 <section id="closing">
+  <canvas id="canvas-bg-closing"></canvas>
   <div class="section-inner" style="text-align:center;">
     <div class="closing-ring"><span class="closing-name-big">정호준</span></div>
     <div class="closing-gallery">
@@ -645,56 +648,92 @@
 </section>
 
 <script>
-const canvas = document.getElementById('canvas-bg');
-const ctx = canvas.getContext('2d');
-let particles = [];
+function createParticleField(canvasId, options) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const {
+    colors,
+    count = 120,
+    minSize = 0.5,
+    maxSize = 2,
+    speed = 0.4,
+    minOpacity = 0.1,
+    maxOpacity = 0.6,
+    lineDist = 100,
+    lineColor = '18,136,248',
+    lineAlpha = 0.08,
+    lineWidth = 0.5
+  } = options;
 
-function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-resize();
-window.addEventListener('resize', resize);
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
 
-class Particle {
-  constructor() { this.reset(); }
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 0.5;
-    this.speedX = (Math.random() - 0.5) * 0.4;
-    this.speedY = (Math.random() - 0.5) * 0.4;
-    this.opacity = Math.random() * 0.5 + 0.1;
-    this.color = Math.random() > 0.5 ? '18,136,248' : '0,214,250';
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * (maxSize - minSize) + minSize;
+      this.speedX = (Math.random() - 0.5) * speed;
+      this.speedY = (Math.random() - 0.5) * speed;
+      this.opacity = Math.random() * (maxOpacity - minOpacity) + minOpacity;
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${this.opacity})`;
+      ctx.fill();
+    }
   }
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${this.color},${this.opacity})`;
-    ctx.fill();
-  }
-}
 
-for (let i = 0; i < 120; i++) particles.push(new Particle());
+  for (let i = 0; i < count; i++) particles.push(new Particle());
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  particles.forEach((p, i) => {
-    particles.slice(i + 1).forEach(q => {
-      const d = Math.hypot(p.x - q.x, p.y - q.y);
-      if (d < 100) {
-        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-        ctx.strokeStyle = `rgba(18,136,248,${0.08 * (1 - d / 100)})`;
-        ctx.lineWidth = 0.5; ctx.stroke();
-      }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    particles.forEach((p, i) => {
+      particles.slice(i + 1).forEach(q => {
+        const d = Math.hypot(p.x - q.x, p.y - q.y);
+        if (d < lineDist) {
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = `rgba(${lineColor},${lineAlpha * (1 - d / lineDist)})`;
+          ctx.lineWidth = lineWidth; ctx.stroke();
+        }
+      });
     });
-  });
-  requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
+  }
+  animate();
 }
-animate();
+
+// 히어로 섹션 - 기존 블루/시안 파티클
+createParticleField('canvas-bg', {
+  colors: ['18,136,248', '0,214,250'],
+  count: 120,
+  minSize: 0.5, maxSize: 2,
+  speed: 0.4,
+  minOpacity: 0.1, maxOpacity: 0.6,
+  lineDist: 100, lineColor: '18,136,248', lineAlpha: 0.08
+});
+
+// 마무리 섹션 - 더 잘 보이는 연보라 파티클
+createParticleField('canvas-bg-closing', {
+  colors: ['167,139,250', '192,132,252'],
+  count: 120,
+  minSize: 0.8, maxSize: 3.2,
+  speed: 0.4,
+  minOpacity: 0.35, maxOpacity: 0.85,
+  lineDist: 110, lineColor: '167,139,250', lineAlpha: 0.18
+});
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
