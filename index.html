@@ -230,6 +230,13 @@
 
   /* 콜라보 제안 */
   #collab { background: var(--dark2); }
+  .collab-rationale { margin-top: 40px; }
+  .collab-rationale-quote { font-size: clamp(17px, 2vw, 22px); font-weight: 700; line-height: 1.6; padding: 28px 32px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 18px; }
+  .collab-rationale-quote .hl { color: var(--cyan); }
+  .collab-reason-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 28px; }
+  .collab-reason-num { font-size: 11px; font-weight: 700; color: var(--cyan); letter-spacing: 0.12em; margin-bottom: 8px; }
+  .collab-reason-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .collab-reason-body { font-size: 12px; color: var(--gray); line-height: 1.75; }
   .collab-cards { display: grid; grid-template-columns: 1fr; gap: 48px; margin-top: 48px; }
   .collab-card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
   .collab-card:hover { border-color: var(--cyan); transform: translateY(-6px); }
@@ -310,7 +317,7 @@
     section { padding: 100px 24px 60px; }
     nav { padding: 14px 24px; }
     .nav-links { display: none; }
-    .intro-grid, .events-grid, .collab-cards, .role-tasks, .devotion-grid, .devotion-pillars, .events-insight-grid { grid-template-columns: 1fr; }
+    .intro-grid, .events-grid, .collab-cards, .role-tasks, .devotion-grid, .devotion-pillars, .events-insight-grid, .collab-reason-grid { grid-template-columns: 1fr; }
     .collab-gallery.g4, .collab-gallery.g2 { grid-template-columns: 1fr; }
     .collab-gallery img, .collab-gallery.g2 img { height: 260px; }
     .collab-body { grid-template-columns: 1fr; }
@@ -601,6 +608,26 @@
     <p class="eyebrow">Collab Proposal</p>
     <h2 class="section-title">실사용 기반 <span class="accent">콜라보 제안</span></h2>
     <div class="section-body">
+      <div class="collab-rationale">
+        <div class="collab-rationale-quote">"블루 아카이브 IP의 지속 가능한 성장을 위해, 팬덤의 라이프스타일에 가장 밀착된 <span class="hl">'스포츠 브랜드'</span>와의 협업을 제안합니다."</div>
+        <div class="collab-reason-grid">
+          <div>
+            <div class="collab-reason-num">01 · LORE MATCH</div>
+            <div class="collab-reason-title">캐릭터 서사와의 완벽한 정합성</div>
+            <div class="collab-reason-body">'밀레니엄의 헬스 매니아' 스미레, '아비도스의 라이딩' 시로코 등 운동과 직결된 캐릭터들의 고유 서사를 제품의 기능적 본질과 완벽하게 일치시킵니다.</div>
+          </div>
+          <div>
+            <div class="collab-reason-num">02 · TARGET FIT</div>
+            <div class="collab-reason-title">2030 남성 유저의 소비 패턴 반영</div>
+            <div class="collab-reason-body">블루 아카이브의 핵심 타겟인 2030 남성층은 자기 관리와 패션 소비에 적극적이며, 스포츠·스트릿 브랜드에 대한 높은 브랜드 친화도를 보유하고 있습니다.</div>
+          </div>
+          <div>
+            <div class="collab-reason-num">03 · BRAND EXTENSION</div>
+            <div class="collab-reason-title">IP 경험의 일상화</div>
+            <div class="collab-reason-body">단순한 소장용 굿즈를 넘어, 운동과 일상생활에서 반복적으로 사용되는 상품군을 통해 유저의 삶 속에 IP의 영향력을 자연스럽게 확장합니다.</div>
+          </div>
+        </div>
+      </div>
       <div class="collab-cards">
         <div class="collab-card">
           <div class="collab-gallery g4">
