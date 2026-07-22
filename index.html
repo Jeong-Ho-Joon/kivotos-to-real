@@ -151,6 +151,13 @@
   /* 행사 경험 */
   #events { background: var(--dark3); }
   .events-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
+  .events-insight-box { margin-top: 28px; background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 20px; padding: 36px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease 0.3s; }
+  .visible .events-insight-box { opacity: 1; transform: translateY(0); }
+  .events-insight-title { font-size: 13px; font-weight: 700; color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 24px; text-transform: uppercase; }
+  .events-insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .events-insight-kr { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+  .events-insight-en { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--cyan); text-transform: uppercase; margin-bottom: 10px; }
+  .events-insight-body { font-size: 12px; color: var(--gray); line-height: 1.75; }
   .event-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
   .event-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
   .visible .event-card { opacity: 1; transform: translateY(0); }
@@ -183,6 +190,9 @@
   .role-arrow { display: flex; align-items: center; padding: 0 8px; color: var(--cyan); font-size: 20px; opacity: 0; transition: all 0.6s ease 0.3s; }
   .visible .role-arrow { opacity: 1; }
   .role-icon { font-size: 32px; margin-bottom: 12px; }
+  .role-logo { height: 34px; width: auto; max-width: 140px; object-fit: contain; margin-bottom: 16px; }
+  .role-logo-group { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 16px; }
+  .role-logo-group .role-logo { margin-bottom: 0; height: 28px; }
   .role-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
   .role-eng { font-size: 11px; color: var(--gray); letter-spacing: 0.08em; margin-bottom: 16px; }
   .role-desc { font-size: 12px; color: var(--gray); line-height: 1.8; }
@@ -260,6 +270,15 @@
   .devotion-body { font-size: 13px; color: var(--gray); line-height: 1.8; }
   .devotion-body strong { color: var(--white); }
   .devotion-note { margin-top: 32px; text-align: center; font-size: 14px; color: var(--gray); }
+  .devotion-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; margin-bottom: 8px; }
+  .devotion-pillar { background: rgba(18,136,248,0.06); border: 1px solid var(--border); border-radius: 18px; padding: 24px; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+  .visible .devotion-pillar { opacity: 1; transform: translateY(0); }
+  .visible .devotion-pillar:nth-child(1) { transition-delay: 0.1s; }
+  .visible .devotion-pillar:nth-child(2) { transition-delay: 0.2s; }
+  .visible .devotion-pillar:nth-child(3) { transition-delay: 0.3s; }
+  .devotion-pillar-kr { font-size: 15px; font-weight: 700; color: var(--cyan); margin-bottom: 2px; }
+  .devotion-pillar-en { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; color: var(--gray); text-transform: uppercase; margin-bottom: 12px; }
+  .devotion-pillar-body { font-size: 12px; color: var(--gray); line-height: 1.75; }
 
   /* 마무리 */
   #closing { background: linear-gradient(180deg, rgba(18,12,32,0.72), rgba(18,12,32,0.82)), url('imgs/closing_bg.jpg') center/cover no-repeat; text-align: center; min-height: 100vh; flex-direction: column; }
@@ -275,6 +294,9 @@
   .visible .closing-sub { opacity: 1; transform: translateY(0); }
   .closing-badge { display: inline-block; background: var(--blue); color: #FFFFFF; font-size: 15px; font-weight: 700; padding: 16px 40px; border-radius: 100px; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.4s; }
   .visible .closing-badge { opacity: 1; transform: translateY(0); }
+  .closing-quote { max-width: 620px; margin: 0 auto 36px; padding: 24px 32px; border-left: 3px solid var(--cyanGlow); background: rgba(255,255,255,0.06); border-radius: 0 12px 12px 0; font-size: 14px; color: rgba(255,255,255,0.88); line-height: 1.85; text-align: left; opacity: 0; transform: translateY(20px); transition: all 0.7s ease 0.35s; }
+  .visible .closing-quote { opacity: 1; transform: translateY(0); }
+  .closing-quote strong { color: var(--cyanGlow); }
 
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--dark); }
@@ -284,7 +306,7 @@
     section { padding: 100px 24px 60px; }
     nav { padding: 14px 24px; }
     .nav-links { display: none; }
-    .intro-grid, .events-grid, .collab-cards, .role-tasks { grid-template-columns: 1fr; }
+    .intro-grid, .events-grid, .collab-cards, .role-tasks, .devotion-grid, .devotion-pillars, .events-insight-grid { grid-template-columns: 1fr; }
     .intro-layout { grid-template-columns: 1fr; }
     .intro-photo-card { order: -1; height: 320px; }
     .intro-row-thumb { display: none; }
@@ -494,6 +516,26 @@
           </div>
         </div>
       </div>
+      <div class="events-insight-box">
+        <div class="events-insight-title">Offline Experience Value · 현실 공간으로 확장된 IP 비즈니스의 가치 체감</div>
+        <div class="events-insight-grid">
+          <div>
+            <div class="events-insight-kr">경험의 확장</div>
+            <div class="events-insight-en">Experience Expansion</div>
+            <div class="events-insight-body">사운드 아카이브 오케스트라 등 대형 문화 이벤트 참여를 통해, 게임 내 콘텐츠가 고부가가치 예술로 전환될 때 팬덤이 느끼는 브랜드 프리미엄과 정서적 충성도 상승을 직접 체감했습니다.</div>
+          </div>
+          <div>
+            <div class="events-insight-kr">고객여정 분석</div>
+            <div class="events-insight-en">Consumer Journey</div>
+            <div class="events-insight-body">주요 콜라보 현장에서 유저들의 대기 시간, 행동 패턴, 굿즈 소비 성향을 분석하며, 인게임 결제를 넘어 오프라인으로 전이되는 팬덤의 '자발적 소비 경로'를 확인했습니다.</div>
+          </div>
+          <div>
+            <div class="events-insight-kr">상품화 통찰</div>
+            <div class="events-insight-en">MD Licensing Insight</div>
+            <div class="events-insight-body">아크릴 스탠드·피규어 등 장식형 굿즈가 가진 높은 소장 가치와 실사용성의 한계를 소비자 관점에서 파악, '실생활 밀착형 라이선싱'의 필요성을 도출했습니다.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -505,11 +547,11 @@
     <h2 class="section-title">IP 라이선스 담당자의 <span class="accent">역할</span></h2>
     <div class="section-body">
       <div class="role-flow">
-        <div class="role-node"><div class="role-icon">🎮</div><div class="role-name">개발사</div><div class="role-eng">NEXON GAMES</div><div class="role-desc">인게임 콘텐츠 개발<br>스토리 · 캐릭터 · OST</div></div>
+        <div class="role-node"><img src="imgs/logo_nexongames.png" alt="넥슨게임즈" class="role-logo" /><div class="role-name">개발사</div><div class="role-eng">NEXON GAMES</div><div class="role-desc">인게임 콘텐츠 개발<br>스토리 · 캐릭터 · OST</div></div>
         <div class="role-arrow">→</div>
-        <div class="role-node highlight"><div class="role-icon">⚡</div><div class="role-name">라이선싱</div><div class="role-eng">IO DIVISION</div><div class="role-desc">게임 외부 IP 확장<br>상품화 · 콜라보 · 감수</div></div>
+        <div class="role-node highlight"><img src="imgs/logo_iodivision.png" alt="IO DIVISION" class="role-logo" /><div class="role-name">라이선싱</div><div class="role-eng">IO DIVISION</div><div class="role-desc">게임 외부 IP 확장<br>상품화 · 콜라보 · 감수</div></div>
         <div class="role-arrow">→</div>
-        <div class="role-node"><div class="role-icon">🌏</div><div class="role-name">퍼블리셔</div><div class="role-eng">NEXON / YOSTAR</div><div class="role-desc">지역별 서비스 운영<br>마케팅</div></div>
+        <div class="role-node"><div class="role-logo-group"><img src="imgs/logo_nexon.png" alt="넥슨" class="role-logo" /><img src="imgs/logo_yostar.png" alt="요스타" class="role-logo" /></div><div class="role-name">퍼블리셔</div><div class="role-eng">NEXON / YOSTAR</div><div class="role-desc">지역별 서비스 운영<br>마케팅</div></div>
       </div>
       <div class="role-tasks">
         <div class="role-task"><div class="role-task-title">라이선스 이슈 협의 및 관리</div><div class="role-task-body">국내외 라이브 서비스 시 발생하는 라이선스 이슈를 파트너사와 협의하고 관리합니다.</div></div>
@@ -588,12 +630,29 @@
 <section id="devotion">
   <div class="section-inner">
     <p class="eyebrow">My Kivotos</p>
-    <h2 class="section-title">키보토스에서의 <span class="accent">추억</span></h2>
+    <h2 class="section-title">키보토스에서의 <span class="accent">1,000일</span></h2>
     <p class="section-body" style="font-size:15px; color:var(--gray); line-height:1.8; margin-bottom:8px;">
       숫자와 전략만으로는 설명되지 않는, 유저로서 실제로 쌓아온 시간의 기록입니다.
     </p>
     <div class="section-body">
-      <div class="devotion-grid">
+      <div class="devotion-pillars">
+        <div class="devotion-pillar">
+          <div class="devotion-pillar-kr">진정성</div>
+          <div class="devotion-pillar-en">Deep Affection</div>
+          <div class="devotion-pillar-body">장기 플레이와 캐릭터 중심의 깊은 정서적 몰입을 통해, 팬덤이 지닌 <strong style="color:var(--white)">'자발적 지불 용의'</strong>의 본질을 체득했습니다.</div>
+        </div>
+        <div class="devotion-pillar">
+          <div class="devotion-pillar-kr">분석력</div>
+          <div class="devotion-pillar-en">Meta Analysis</div>
+          <div class="devotion-pillar-body">총력전·대결전 상위권 플레이 경험을 바탕으로, 인게임 메타와 콘텐츠 업데이트가 <strong style="color:var(--white)">유저 리텐션</strong>에 미치는 영향을 분석합니다.</div>
+        </div>
+        <div class="devotion-pillar">
+          <div class="devotion-pillar-kr">통찰력</div>
+          <div class="devotion-pillar-en">Core IP Insight</div>
+          <div class="devotion-pillar-body">세계관과 캐릭터 서사가 지닌 고유의 매력을 파악하여, 인게임 경험의 핵심 가치를 <strong style="color:var(--white)">현실로 연결</strong>하는 라이선싱 기반을 마련합니다.</div>
+        </div>
+      </div>
+      <div class="devotion-grid" style="margin-top:20px;">
         <div class="devotion-card">
           <img src="imgs/ingame_raid_124f.jpg" alt="제결전 세트의 분노 124층 클리어" />
           <div class="devotion-content">
@@ -643,6 +702,7 @@
     </div>
     <h2 class="closing-main">플레이어의 감동을<br><span style="color:var(--cyanGlow)">비즈니스의 확신으로.</span></h2>
     <p class="closing-sub">블루 아카이브는 저에게 단순한 게임이 아닙니다.<br>IP가 현실의 경험으로 확장될 수 있다는 가능성을 보여준 콘텐츠였습니다.<br><br>오프라인 행사와 다양한 콜라보를 직접 경험하며,<br>유저가 어떤 순간에 즐거움을 느끼고 소비로 이어지는지 고민하게 되었습니다.<br><br>이 경험을 바탕으로, 유저와 브랜드 모두가 만족할 수 있는 IP 경험을 함께 만들고 싶습니다.</p>
+    <div class="closing-quote">"선생님으로서 키보토스에 쏟았던 진심 어린 애정을, 이제는 <strong>넥슨게임즈 IO본부</strong>의 계량화된 비즈니스 성과와 성공적인 브랜드 익스텐션으로 증명하겠습니다."</div>
     <div class="closing-badge">준비된 IP 라이선스 담당자, 정호준입니다.</div>
   </div>
 </section>
