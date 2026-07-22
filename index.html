@@ -67,27 +67,21 @@
   .visible .eyebrow, .visible .section-title, .visible .section-body { opacity: 1; transform: translateY(0); }
 
   /* 히어로 */
-  #hero { min-height: 100vh; background: var(--dark); flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 10vw; }
+  #hero { min-height: 100vh; background: var(--dark); flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-left: 0; }
   #canvas-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-  .hero-content { position: relative; z-index: 1; }
+  .hero-content { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
   .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 214, 250, 0.1); border: 1px solid var(--border); border-radius: 100px; padding: 6px 16px; font-size: 12px; color: var(--cyan); font-weight: 600; letter-spacing: 0.1em; margin-bottom: 32px; animation: fadeUp 0.8s ease forwards; }
   .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--cyanGlow); border-radius: 50%; animation: pulse 2s infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
   .hero-main { font-size: clamp(42px, 7vw, 88px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; animation: fadeUp 0.8s ease 0.1s both; }
   .hero-main .line2 { color: var(--cyan); }
-  .hero-sub { margin-top: 28px; font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 480px; animation: fadeUp 0.8s ease 0.2s both; }
-  .hero-name { margin-top: 48px; display: flex; align-items: center; gap: 20px; animation: fadeUp 0.8s ease 0.3s both; }
+  .hero-sub { margin: 28px auto 0; font-size: 16px; color: var(--gray); line-height: 1.7; max-width: 480px; animation: fadeUp 0.8s ease 0.2s both; }
+  .hero-name { margin-top: 48px; display: flex; align-items: center; justify-content: center; gap: 20px; animation: fadeUp 0.8s ease 0.3s both; }
   .hero-name-text { font-size: 20px; font-weight: 700; }
   .hero-name-role { font-size: 13px; color: var(--cyan); font-weight: 500; background: rgba(18, 136, 248, 0.12); border: 1px solid rgba(18, 136, 248, 0.3); border-radius: 6px; padding: 4px 12px; }
-  .hero-tags { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.4s both; }
+  .hero-tags { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; animation: fadeUp 0.8s ease 0.4s both; }
   .hero-chip { background: rgba(43,43,43,0.04); border: 1px solid rgba(43,43,43,0.14); border-radius: 100px; padding: 8px 18px; font-size: 13px; color: var(--gray); }
   .hero-chip.active { background: rgba(18, 136, 248, 0.15); border-color: rgba(18, 136, 248, 0.4); color: var(--cyan); }
-  .hero-photo { position: absolute; right: 8vw; top: 50%; transform: translateY(-50%); z-index: 2; }
-  .hero-photo-wrap { width: 300px; height: 400px; border-radius: 20px; overflow: hidden; border: 2px solid rgba(0,214,250,0.4); box-shadow: 0 0 40px rgba(18,136,248,0.3); }
-  .hero-photo-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-  .hero-photo-caption { background: rgba(10,10,20,0.9); padding: 12px 16px; }
-  .hero-photo-caption .sub { font-size: 11px; color: var(--cyan); font-weight: 700; letter-spacing: 0.15em; margin-bottom: 2px; }
-  .hero-photo-caption .main { font-size: 13px; color: white; font-weight: 600; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
   /* 자기소개 */
@@ -279,7 +273,6 @@
     .lore-thead, .lore-row { grid-template-columns: 1fr 70px; }
     .lore-thead span:nth-child(3), .lore-thead span:nth-child(4), .lore-body, .lore-insight { display: none; }
     .lore-body { display: block; }
-    .hero-photo { display: none; }
     .closing-gallery { grid-template-columns: 1fr 1fr; }
     .collab-photos { grid-template-columns: 1fr; }
   }
@@ -319,15 +312,6 @@
       <span class="hero-chip">2022~ 장기 플레이</span>
       <span class="hero-chip">다수 행사 참여</span>
       <span class="hero-chip">키보토스 런 완주</span>
-    </div>
-  </div>
-  <div class="hero-photo">
-    <div class="hero-photo-wrap">
-      <img src="imgs/hero.jpg" alt="키보토스 런 완주" />
-    </div>
-    <div class="hero-photo-caption">
-      <div class="sub">KIVOTOS RUN 2026</div>
-      <div class="main">완주 기록 25:18 · C2811</div>
     </div>
   </div>
 </section>
